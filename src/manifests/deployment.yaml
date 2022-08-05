@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubenews-deployment
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: kubenews
+  template: #Copia dos dados do pod
+    metadata: # Remover name e adicionar labels e app: <name>
+      labels: 
+        app: kubenews
+    spec:
+      containers:
+      - name: kubenews
+        image: hugovasc/kube-news:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+          - containerPort: 8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: kubenews-service-web
+spec:
+  selector:
+    app: kubenews
+  ports:
+  - port: 80
+    targetPort: 8080
+    nodePort: 30000
+  type: NodePort

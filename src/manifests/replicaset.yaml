@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: kubenews-replicaset
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: kubenews
+  template: #Copia dos dados do pod
+    metadata: # Remover name e adicionar labels e app: <name>
+      labels: 
+        app: kubenews
+    spec:
+      containers:
+      - name: kubenews
+        image: hugovasc/kube-news:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+          - containerPort: 8080

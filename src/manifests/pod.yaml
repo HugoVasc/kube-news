@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Pod
+metadata:
+  name: kubenews
+  labels:
+    name: kubenews
+spec:
+  containers:
+  - name: kubenews
+    image: hugovasc/kube-news:latest
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 8080
